@@ -1,0 +1,31 @@
+.tabs {
+  padding: 0;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  background: #fff;
+  margin: 0;
+  padding-inline: var(--padding-inline);
+  font-size: 13px;
+}
+
+.tabs li {
+  height: 32px;
+  line-height: 32px;
+  list-style: none;
+  border-block-end: 3px solid var(--blue);
+}
+
+.collapse {
+  padding-inline: 8px;
+  display: flex;
+  align-items: center;
+  height: 32px;
+  color: var(--text-gray);
+}
+.collapse h2 {
+  margin: 0;
+  font-size: 13px;
+  font-weight: 400;
+  margin-inline-start: 4px;
+}

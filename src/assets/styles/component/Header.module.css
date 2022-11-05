@@ -1,0 +1,43 @@
+.container {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.header {
+  background-color: var(--background);
+  color: #fff;
+  padding: var(--padding-block) var(--padding-inline);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.logo {
+  width: 32px;
+  height: 32px;
+}
+
+.name {
+  margin-left: 8px;
+  font-size: 19px;
+  font-weight: bold;
+}
+.name span {
+  font-size: 12px;
+  display: block;
+  font-weight: normal;
+  transform: scale(0.8);
+  transform-origin: bottom left;
+  filter: brightness(0.9);
+}
+
+.setting {
+  cursor: pointer;
+}
