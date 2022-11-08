@@ -1,9 +1,9 @@
 import React from 'react'
 import { MoreVertical } from 'lucide-react'
-import style from '../assets/styles/component/ToolItem.module.css'
-import { Tool } from '../assets/data'
+import style from './style.module.css'
 import { useNavigate } from 'react-router-dom'
-import { publish } from '../events'
+import { Tool } from '~/assets/data'
+import { publish } from '~/events'
 
 const ToolItemPure: React.FC<{ tool: Tool }> = ({ tool }) => {
   const navigate = useNavigate()

@@ -1,10 +1,10 @@
 import { useRecoilValue } from 'recoil'
 import { ChevronDown } from 'lucide-react'
-import HomeHeader from '../components/HomeHeader'
-import ToolItemPure from '../components/ToolItemPure'
-import style from '../assets/styles/page/index.module.css'
-import { avaliableListState } from '../stores/install-store'
-import InstallList from '../components/InstallList'
+import ToolItemPure from '~/components/ToolItem/ToolItemPure'
+import HomeHeader from '~/components/HomeHeader'
+import InstallList from '~/components/InstallList'
+import style from '~/assets/styles/page/index.module.css'
+import { avaliableListState } from '~/stores/install-store'
 
 export default function Home() {
   const avaliable = useRecoilValue(avaliableListState)

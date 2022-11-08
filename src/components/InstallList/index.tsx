@@ -1,9 +1,9 @@
 import React, { useMemo } from 'react'
 import { useRecoilValue } from 'recoil'
-import { installMapState, InstallStatus } from '../stores/install-store'
-import { sourceData, Tool } from '../assets/data'
-import style from '../assets/styles/component/InstallList.module.css'
-import ToolItem from './ToolItem'
+import { installMapState, InstallStatus } from '~/stores/install-store'
+import { sourceData, Tool } from '~/assets/data'
+import ToolItem from '../ToolItem/ToolItem'
+import style from './style.module.css'
 
 export type InstallTool = Tool & {
   version: string

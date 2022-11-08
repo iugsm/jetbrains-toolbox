@@ -1,6 +1,6 @@
 import React from 'react'
 import { Settings } from 'lucide-react'
-import style from '../assets/styles/component/Header.module.css'
+import style from './style.module.css'
 
 const HomeHeader: React.FC<{ children?: React.ReactNode }> = ({ children }) => {
   return (

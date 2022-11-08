@@ -1,10 +1,10 @@
 import React, { useMemo } from 'react'
-import { MoreVertical } from 'lucide-react'
-import style from '../assets/styles/component/ToolItem.module.css'
-import Progress from './Progress'
 import { useRecoilValue } from 'recoil'
-import { progressState } from '../stores/progress-store'
-import { InstallTool } from './InstallList'
+import { MoreVertical } from 'lucide-react'
+import { progressState } from '~/stores/progress-store'
+import { InstallTool } from '../InstallList'
+import style from './style.module.css'
+import Progress from '../Progress'
 
 const ToolItem: React.FC<{ tool: InstallTool }> = ({ tool }) => {
   const progressMap = useRecoilValue(progressState)

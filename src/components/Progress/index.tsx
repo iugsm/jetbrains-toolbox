@@ -1,5 +1,5 @@
 import React from 'react'
-import style from '../assets/styles/component/Progress.module.css'
+import style from './style.module.css'
 
 const Progress: React.FC<{ percent: number }> = ({ percent }) => {
   return (
