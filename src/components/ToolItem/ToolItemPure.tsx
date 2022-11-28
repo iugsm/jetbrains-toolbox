@@ -4,10 +4,9 @@ import style from './style.module.css'
 import { useNavigate } from 'react-router-dom'
 import { Tool } from '~/assets/data'
 import { publish } from '~/events'
+import Dropdown from '../Dropdown'
 
 const ToolItemPure: React.FC<{ tool: Tool }> = ({ tool }) => {
-  const navigate = useNavigate()
-
   const handleInstall = (
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => {
@@ -17,9 +16,16 @@ const ToolItemPure: React.FC<{ tool: Tool }> = ({ tool }) => {
 
   return (
     <section
+      style={{ position: 'relative' }}
       className={style.tool_wrap + ' full-bleed'}
-      onClick={() => navigate(`/${tool.name}`)}
     >
+      <a
+        href={`/${tool.name}`}
+        style={{
+          position: 'absolute',
+          inset: '0',
+        }}
+      ></a>
       <img src={tool.logo} className={style.logo} alt='' />
 
       <div className={style.main}>
@@ -30,7 +36,7 @@ const ToolItemPure: React.FC<{ tool: Tool }> = ({ tool }) => {
             安装
           </button>
 
-          <div className={style.more}>
+          <div className={style.more} style={{ zIndex: '9' }}>
             <MoreVertical size={14} />
           </div>
         </div>
