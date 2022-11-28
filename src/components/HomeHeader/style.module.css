@@ -1,10 +1,8 @@
-.container {
+.header {
   position: sticky;
   top: 0;
   z-index: 10;
-}
 
-.header {
   background-color: var(--background);
   color: #fff;
   padding: var(--padding-block) var(--padding-inline);
