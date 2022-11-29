@@ -19,6 +19,8 @@
 
 <template>
   <section class="wrap">
+    <router-link :to="`/${software.name}`" class="link" />
+
     <img :src="software.logo" class="logo" alt="logo" />
 
     <main class="main">
@@ -38,14 +40,31 @@
 
         <v-menu location="bottom end">
           <template v-slot:activator="{ props }">
-            <v-btn width="24" height="24" icon variant="flat" v-bind="props">
+            <v-btn
+              width="24"
+              height="24"
+              icon
+              variant="flat"
+              color="transparent"
+              v-bind="props"
+            >
               <v-icon icon="mdi-dots-vertical" size="16"></v-icon>
             </v-btn>
           </template>
 
           <v-list density="compact" class="menu-wrap">
-            <v-list-item>关于 {{ software.name }}</v-list-item>
-            <v-list-item>可用版本</v-list-item>
+            <v-list-item value="about">
+              <router-link :to="`/${software.name}`" class="menu-link">
+                关于 {{ software.name }}
+              </router-link>
+            </v-list-item>
+            <v-list-item value="version">
+              <router-link
+                :to="`/${software.name}?tab=version`"
+                class="menu-link"
+                >可用版本</router-link
+              >
+            </v-list-item>
           </v-list>
         </v-menu>
       </div>
@@ -123,5 +142,11 @@
 
   .menu-wrap:deep(.v-list-item__content) {
     font-size: 13px;
+  }
+
+  .menu-link {
+    all: unset;
+    cursor: pointer;
+    display: block;
   }
 </style>

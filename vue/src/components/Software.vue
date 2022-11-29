@@ -1,7 +1,6 @@
 <script lang="ts" setup>
   import { useProgress } from "@/stores/progress";
   import type { InstallSoftware } from "@/stores/software";
-  import { storeToRefs } from "pinia";
   import { computed } from "vue";
 
   const props = defineProps<{
@@ -9,13 +8,11 @@
   }>();
 
   const progressStore = useProgress();
-  const { progressMap } = storeToRefs(progressStore);
 
   const progressKey = `${props.software.name}${props.software.version}`;
 
   const percent = computed(() => {
-    const res = progressMap.value.get(progressKey);
-    return res;
+    return progressStore.progressMap.get(progressKey);
   });
 
   const showProgress = computed(() => {
@@ -52,8 +49,18 @@
           </template>
 
           <v-list density="compact" class="menu-wrap">
-            <v-list-item>关于 {{ software.name }}</v-list-item>
-            <v-list-item>可用版本</v-list-item>
+            <v-list-item value="about">
+              <router-link :to="`/${software.name}`" class="menu-link">
+                关于 {{ software.name }}
+              </router-link>
+            </v-list-item>
+            <v-list-item value="version">
+              <router-link
+                :to="`/${software.name}?tab=version`"
+                class="menu-link"
+                >其它版本</router-link
+              >
+            </v-list-item>
           </v-list>
         </v-menu>
       </div>
@@ -61,7 +68,7 @@
       <!-- 状态和描述 -->
       <div class="status">
         <p v-if="!showProgress" class="description">
-          {{ software.description }}
+          {{ software.versionCode }}
         </p>
 
         <template v-else>
@@ -155,5 +162,11 @@
 
   .menu-wrap:deep(.v-list-item__content) {
     font-size: 13px;
+  }
+
+  .menu-link {
+    all: unset;
+    display: block;
+    cursor: pointer;
   }
 </style>

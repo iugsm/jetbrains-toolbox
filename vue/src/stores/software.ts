@@ -17,6 +17,7 @@ export interface InstallMapValue {
 
 export type InstallSoftware = Software & {
   version: string;
+  versionCode: string;
   key: string;
   status: InstallStatus;
 };
