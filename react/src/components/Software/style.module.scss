@@ -117,6 +117,8 @@
 .menu_item {
   font-size: 13px !important;
   min-width: 160px;
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
 
   .menu_link {
     all: unset;
