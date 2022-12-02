@@ -1,0 +1,54 @@
+.wrap {
+  --btn-border-color: #afcbe0;
+  --btn-hover-color: #e9e9ea;
+  --btn-active-color: #cbcbcc;
+
+  font-size: 13px;
+  padding: 12px var(--padding-inline);
+  cursor: pointer;
+  display: grid;
+  grid-template-columns: 2fr 1fr min-content;
+
+  &:hover {
+    background: var(--blue-hover-bg);
+  }
+}
+
+.name {
+  .code {
+    margin: 0;
+    font-size: 12px;
+    color: var(--text-gray);
+  }
+}
+
+.date {
+  font-size: 12px;
+  color: var(--text-gray);
+}
+
+.status {
+  width: 70px;
+  display: flex;
+  justify-content: end;
+}
+
+.install_btn {
+  width: 64px;
+  height: 22px;
+  border-radius: 4px;
+  border: 1px solid #afcbe0 !important;
+  line-height: 1 !important;
+  padding-block: 4px !important;
+  font-size: 13px !important;
+  color: var(--text-black) !important;
+  font-weight: 400 !important;
+
+  &:hover {
+    background: #e9e9ea;
+  }
+
+  &:active {
+    background: #cbcbcc;
+  }
+}

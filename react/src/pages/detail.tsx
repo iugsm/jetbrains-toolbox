@@ -1,34 +1,54 @@
 import { Tab, Tabs } from "@mui/material";
-import { useEffect, useState } from "react";
+import { useMemo, useState } from "react";
 import { useParams, useSearchParams } from "react-router-dom";
 import DetailHeader from "~/components/DetailHeader";
+
+import style from "~/assets/styles/detail.module.scss";
+import { softwareData } from "~/utils";
+import SoftwareVersion from "~/components/SoftwareVersion";
 
 export default function Detail() {
   const { name } = useParams();
   const [searchParams] = useSearchParams();
+  const initTabValue = searchParams.get("tab") || "about";
 
-  const [tab, setTab] = useState(0);
+  const [tab, setTab] = useState(initTabValue);
 
-  useEffect(() => {
-    if (searchParams.get("tab") === "version") {
-      setTab(1);
-    }
-  }, [searchParams]);
-
-  const handleChange = (event: React.SyntheticEvent, newValue: number) => {
+  const handleChange = (event: React.SyntheticEvent, newValue: string) => {
     setTab(newValue);
   };
+
+  const versionList = useMemo(() => {
+    return softwareData.filter((element) => element.name === name);
+  }, [name]);
 
   return (
     <>
       <DetailHeader name={name} />
 
-      <Tabs value={tab} onChange={handleChange}>
-        <Tab label="概述" />
-        <Tab label="版本" />
+      <Tabs value={tab} onChange={handleChange} className={style.tabs}>
+        <Tab value="about" label="概述" className={style.tab} />
+        <Tab value="version" label="版本" className={style.tab} />
       </Tabs>
 
-      {}
+      <section
+        style={{ display: tab === "about" ? "" : "none" }}
+        className={style.about_section}
+      >
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Iusto, nostrum
+        facere impedit libero laudantium repellendus obcaecati! Culpa aspernatur
+        pariatur soluta neque earum laboriosam quisquam, praesentium non iure
+        reiciendis nam odio?
+      </section>
+
+      <section
+        style={{ display: tab === "version" ? "" : "none" }}
+        className={style.version_section}
+      >
+        {versionList.map((item) => (
+          <SoftwareVersion software={item} key={item.id} />
+        ))}
+      </section>
     </>
   );
 }

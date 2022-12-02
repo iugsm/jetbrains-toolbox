@@ -1,0 +1,34 @@
+.tabs {
+  min-height: 36px !important;
+  padding-inline: var(--padding-inline);
+
+  .tab {
+    min-width: 0;
+    min-height: 0;
+    height: 36px;
+    padding: 0;
+    &:first-child {
+      margin-inline-end: 20px;
+    }
+
+    color: var(--blue) !important;
+
+    &:not(:global(.Mui-selected)) {
+      color: var(--text-gray) !important;
+    }
+  }
+
+  :global(.MuiTabs-indicator) {
+    background-color: var(--blue);
+  }
+}
+
+.about_section {
+  margin-block-start: 28px;
+  padding-inline: var(--padding-inline);
+  font-size: 13px;
+}
+
+.version_section {
+  margin-block-start: 28px;
+}
