@@ -34,6 +34,8 @@
       transition: filter 0.2s;
       display: inline-flex;
       align-items: center;
+      position: relative;
+      left: -4px;
 
       &:hover {
         filter: brightness(1.2);

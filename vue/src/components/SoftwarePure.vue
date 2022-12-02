@@ -1,6 +1,6 @@
 <script lang="ts" setup>
-  import type { Software } from "@/assets/data";
   import { emitterKey } from "@/emitter";
+  import type { Software } from "@/utils";
   import { inject } from "vue";
 
   const props = defineProps<{
@@ -10,10 +10,7 @@
   const emitter = inject(emitterKey);
 
   const handleInstall = () => {
-    emitter?.emit("install", {
-      name: props.software.name,
-      version: props.software.versions[0].code,
-    } as any);
+    emitter?.emit("install", props.software as any);
   };
 </script>
 
@@ -38,6 +35,7 @@
           安装
         </v-btn>
 
+        <!-- 菜单 -->
         <v-menu location="bottom end">
           <template v-slot:activator="{ props }">
             <v-btn

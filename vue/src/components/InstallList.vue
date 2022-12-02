@@ -1,35 +1,33 @@
 <script lang="ts" setup>
-  import { sourceData, type Software } from "@/assets/data";
-  import { useInstallMap, type InstallSoftware } from "@/stores/software";
+  import { useInstallList } from "@/stores/software";
   import { storeToRefs } from "pinia";
-  import { computed } from "vue";
 
   import SoftwareComponent from "./Software.vue";
 
-  const installMapStore = useInstallMap();
-  const { installMap } = storeToRefs(installMapStore);
+  const installListStore = useInstallList();
+  const { installList } = storeToRefs(installListStore);
 
-  const installList = computed(() => {
-    let list: InstallSoftware[] = [];
+  // const installList = computed(() => {
+  //   let list: InstallSoftware[] = [];
 
-    let allSoftwareMap = new Map<string, Software>();
-    sourceData.forEach((item) => allSoftwareMap.set(item.name, item));
+  //   let allSoftwareMap = new Map<string, Software>();
+  //   sourceData.forEach((item) => allSoftwareMap.set(item.name, item));
 
-    for (const [key, value] of installMap.value) {
-      const versionCode = allSoftwareMap
-        .get(key.name)
-        ?.versions.filter((item) => item.code === key.version)[0].name;
-      const temp: InstallSoftware = {
-        ...allSoftwareMap.get(key.name)!,
-        key: key.name + key.version,
-        version: key.version,
-        versionCode: versionCode || "",
-        status: value.status,
-      };
-      list.push(temp);
-    }
-    return list;
-  });
+  //   for (const [key, value] of installMap.value) {
+  //     const versionCode = allSoftwareMap
+  //       .get(key.name)
+  //       ?.versions.filter((item) => item.code === key.version)[0].name;
+  //     const temp: InstallSoftware = {
+  //       ...allSoftwareMap.get(key.name)!,
+  //       key: key.name + key.version,
+  //       version: key.version,
+  //       versionCode: versionCode || "",
+  //       status: value.status,
+  //     };
+  //     list.push(temp);
+  //   }
+  //   return list;
+  // });
 </script>
 
 <template>

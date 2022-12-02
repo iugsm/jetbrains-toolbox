@@ -1,16 +1,9 @@
 <script lang="ts" setup>
-  import { sourceData } from "@/assets/data";
   import DetailHeader from "@/components/DetailHeader.vue";
   import SoftwareVersion from "@/components/SoftwareVersion.vue";
+  import { softwareData } from "@/utils";
   import { computed, ref } from "vue";
   import { useRoute } from "vue-router";
-
-  export type SoftwareVersionProps = {
-    code: string;
-    date: string;
-    name: string;
-    softwareName: string;
-  };
 
   const route = useRoute();
   const name = route.params.name as string;
@@ -18,23 +11,8 @@
 
   const tab = ref(routeTab || "about");
 
-  const list = computed(() => {
-    const currentSoftware = sourceData.filter((item) => item.name === name)[0];
-
-    if (currentSoftware) {
-      const allVersion = currentSoftware.versions;
-
-      const tempArray: SoftwareVersionProps[] = [];
-
-      allVersion.forEach((item) => {
-        tempArray.push({
-          ...item,
-          softwareName: name,
-        });
-      });
-
-      return tempArray;
-    }
+  const versionList = computed(() => {
+    return softwareData.filter((element) => element.name === name);
   });
 </script>
 
@@ -54,12 +32,8 @@
     </section>
 
     <section v-show="tab === 'version'" class="content version-section">
-      <template v-if="list">
-        <SoftwareVersion
-          v-for="item in list"
-          :key="item.code"
-          :software="item"
-        />
+      <template v-if="versionList">
+        <SoftwareVersion v-for="item in versionList" :software="item" />
       </template>
     </section>
   </div>

@@ -1,26 +1,14 @@
-import { ref, computed, reactive } from "vue";
-import { defineStore } from "pinia";
-import { sourceData, type Software } from "@/assets/data";
+import { ref, computed } from "vue";
+import { defineStore, storeToRefs } from "pinia";
+import { softwareData, type Software } from "@/utils";
 
 export type InstallStatus =
   | "downloading"
   | "installing"
   | "installed"
   | "uninstalling";
-export interface InstallMapKey {
-  name: string;
-  version: string;
-}
-export interface InstallMapValue {
-  status: InstallStatus;
-}
 
-export type InstallSoftware = Software & {
-  version: string;
-  versionCode: string;
-  key: string;
-  status: InstallStatus;
-};
+export type TInstallSoftware = Software & { status: InstallStatus };
 
 export const useCounterStore = defineStore("counter", () => {
   const count = ref(0);
@@ -32,22 +20,31 @@ export const useCounterStore = defineStore("counter", () => {
   return { count, doubleCount, increment };
 });
 
-export const useInstallMap = defineStore("installMap", () => {
-  const installMap = reactive(new Map<InstallMapKey, InstallMapValue>());
-  return { installMap };
+export const useInstallList = defineStore("installListSotre", () => {
+  const installList = ref<TInstallSoftware[]>([]);
+
+  return {
+    installList,
+  };
 });
 
-export const useAvaliableList = defineStore("avaliableList", () => {
-  const installMap = useInstallMap();
+export const useAvaliableList = defineStore("avaliableListStore", () => {
+  const installListStore = useInstallList();
 
   const avaliableList = computed(() => {
-    const nameSet = new Set<string>();
-    for (const [key] of installMap.installMap) {
-      nameSet.add(key.name);
-    }
+    const installSet = new Set();
 
-    const res = sourceData.filter((item) => !nameSet.has(item.name));
-    return res;
+    installListStore.installList.forEach((element) => {
+      installSet.add(element.name);
+    });
+
+    const list: Software[] = [];
+    softwareData.forEach((element) => {
+      if (!installSet.has(element.name) && element.children !== undefined) {
+        list.push(element);
+      }
+    });
+    return list;
   });
 
   return {

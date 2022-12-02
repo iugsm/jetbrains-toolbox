@@ -1,4 +1,4 @@
-export interface Software {
+export interface SourceData {
   name: string;
   description: string;
   logo: string;
@@ -9,7 +9,7 @@ export interface Software {
   }[];
 }
 
-export const sourceData: Software[] = [
+export const sourceData: SourceData[] = [
   {
     name: "Flee",
     description: "由 JetBrains 打造的下一代 IDE",

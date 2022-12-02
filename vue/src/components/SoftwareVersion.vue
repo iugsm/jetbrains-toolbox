@@ -1,41 +1,38 @@
 <script lang="ts" setup>
   import { emitterKey } from "@/emitter";
-  import { useInstallMap, type InstallStatus } from "@/stores/software";
-  import type { SoftwareVersionProps } from "@/views/Detail.vue";
+  import { useInstallList } from "@/stores/software";
+  import type { Software } from "@/utils";
   import { computed, inject } from "vue";
 
-  const props = defineProps<{ software: SoftwareVersionProps }>();
+  const props = defineProps<{ software: Software }>();
 
   // 安装状态
-  const installMapStore = useInstallMap();
+  const installStore = useInstallList();
 
   const installStatus = computed(() => {
-    for (const [key, value] of installMapStore.installMap) {
-      if (
-        key.name === props.software.softwareName &&
-        key.version === props.software.code
-      ) {
-        return value.status;
-      }
+    const currentSoftware = installStore.installList.filter(
+      (element) => element.id === props.software.id
+    );
+
+    if (currentSoftware.length > 0) {
+      return currentSoftware[0].status;
     }
+
     return undefined;
   });
 
   // 安装逻辑
   const emitter = inject(emitterKey);
   const handleInstall = () => {
-    emitter?.emit("install", {
-      name: props.software.softwareName,
-      version: props.software.code,
-    } as any);
+    emitter?.emit("install", props.software as any);
   };
 </script>
 
 <template>
   <section class="wrap">
     <div :class="['name', installStatus === 'installed' ? 'active' : '']">
-      {{ software.name }}
-      <p class="code">{{ software.code }}</p>
+      {{ software.versionName }}
+      <p class="code">{{ software.versionCode }}</p>
     </div>
 
     <div class="date">{{ software.date }}</div>

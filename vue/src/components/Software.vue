@@ -1,18 +1,16 @@
 <script lang="ts" setup>
   import { useProgress } from "@/stores/progress";
-  import type { InstallSoftware } from "@/stores/software";
+  import type { TInstallSoftware } from "@/stores/software";
   import { computed } from "vue";
 
   const props = defineProps<{
-    software: InstallSoftware;
+    software: TInstallSoftware;
   }>();
 
   const progressStore = useProgress();
 
-  const progressKey = `${props.software.name}${props.software.version}`;
-
   const percent = computed(() => {
-    return progressStore.progressMap.get(progressKey);
+    return progressStore.progressMap.get(props.software.id);
   });
 
   const showProgress = computed(() => {
@@ -68,7 +66,7 @@
       <!-- 状态和描述 -->
       <div class="status">
         <p v-if="!showProgress" class="description">
-          {{ software.versionCode }}
+          {{ software.versionName }}
         </p>
 
         <template v-else>
