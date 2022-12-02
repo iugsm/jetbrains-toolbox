@@ -2,7 +2,7 @@
   import { emitterKey } from "@/emitter";
   import { useInstallList } from "@/stores/software";
   import type { Software } from "@/utils";
-  import { computed, inject } from "vue";
+  import { computed, inject, ref } from "vue";
 
   const props = defineProps<{ software: Software }>();
 
@@ -22,8 +22,12 @@
   });
 
   // 安装逻辑
+  const disabled = ref(false);
   const emitter = inject(emitterKey);
   const handleInstall = () => {
+    if (disabled.value) return;
+
+    disabled.value = true;
     emitter?.emit("install", props.software as any);
   };
 </script>

@@ -1,7 +1,7 @@
 <script lang="ts" setup>
   import { emitterKey } from "@/emitter";
   import type { Software } from "@/utils";
-  import { inject } from "vue";
+  import { inject, ref } from "vue";
 
   const props = defineProps<{
     software: Software;
@@ -9,7 +9,11 @@
 
   const emitter = inject(emitterKey);
 
+  const disabled = ref(false);
+
   const handleInstall = () => {
+    if (disabled.value) return;
+    disabled.value = true;
     emitter?.emit("install", props.software as any);
   };
 </script>
