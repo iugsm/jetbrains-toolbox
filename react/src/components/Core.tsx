@@ -1,54 +1,61 @@
 import { useEffect } from "react";
 import { useRecoilState, useSetRecoilState } from "recoil";
-import { subscribe, unsubscribe } from "~/event";
+import { subscribe, unsubscribe } from "~/utils/event";
 import { progressState } from "~/stores/progress";
-import { InstallMapKey, installMapState } from "~/stores/software";
+import { Software } from "~/utils";
+import { installListState } from "~/stores/software";
 
 const Core = () => {
-  const setInstallMap = useSetRecoilState(installMapState);
-  const [progress, setProgress] = useRecoilState(progressState);
+  const setInstallList = useSetRecoilState(installListState);
+  const [progressMap, setProgressMap] = useRecoilState(progressState);
 
-  const handleInstall = (data: any) => {
-    if (data.detail && data.detail.name && data.detail.version) {
-      const arg: InstallMapKey = {
-        name: data.detail.name,
-        version: data.detail.version,
-      };
+  const handleInstall = (evt: CustomEvent) => {
+    const software = evt.detail as Software;
+    setInstallList((prev) => [...prev, { ...software, status: "downloading" }]);
 
-      setInstallMap(
-        (prev) => new Map(prev.set(arg, { status: "downloading" }))
-      );
+    // 获取百分比
+    let percent = progressMap.get(software.id);
+    if (percent === undefined) {
+      // 没有就添加
+      percent = 0;
+      setProgressMap((prev) => new Map(prev.set(software.id, 0)));
+    }
 
-      const progressKey = `${arg.name}${arg.version}`;
+    let intervalID = setInterval(() => {
+      if (percent! < 100) {
+        percent =
+          percent! + Math.random() * 10 > 100
+            ? 100
+            : (percent = percent! + Math.random() * 10);
+      } else {
+        clearInterval(intervalID);
 
-      let percent = progress.get(progressKey);
+        // 修改状态为 installing
+        setInstallList((prev) => {
+          const res = prev.map((element) => {
+            const temp = { ...element };
+            if (temp.id === software.id) temp.status = "installing";
+            return temp;
+          });
+          return res;
+        });
 
-      if (percent === undefined) {
-        percent = 0;
-        setProgress((prev) => new Map(prev.set(progressKey, 0)));
+        // 2000ms 后修改为 installed
+        setTimeout(() => {
+          setInstallList((prev) => {
+            const res = prev.map((element) => {
+              const temp = { ...element };
+              if (temp.id === software.id) temp.status = "installed";
+              return temp;
+            });
+            return res;
+          });
+        }, 2000);
       }
 
-      let intervalId = setInterval(() => {
-        if (percent! < 100) {
-          percent =
-            percent! + Math.random() * 10 > 100
-              ? 100
-              : (percent = percent! + Math.random() * 10);
-        } else {
-          clearInterval(intervalId);
-          setInstallMap(
-            (prev) => new Map(prev.set(arg, { status: "installing" }))
-          );
-
-          setTimeout(() => {
-            setInstallMap(
-              (prev) => new Map(prev.set(arg, { status: "installed" }))
-            );
-          }, 2000);
-        }
-        setProgress((prev) => new Map(prev.set(progressKey, percent!)));
-      }, 1000);
-    }
+      // 设置百分比
+      setProgressMap((prev) => new Map(prev.set(software.id, percent!)));
+    }, 1000);
   };
 
   useEffect(() => {

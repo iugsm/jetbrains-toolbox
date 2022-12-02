@@ -6,8 +6,9 @@ import router from "./router";
 export default function App() {
   return (
     <div style={{ maxWidth: "65ch", margin: "0 auto" }}>
-      <RouterProvider router={router} />
       <CssBaseline />
+      <RouterProvider router={router} />
+
       <Core />
     </div>
   );

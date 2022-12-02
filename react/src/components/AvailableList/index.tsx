@@ -15,7 +15,7 @@ export default function AvailableList() {
       </header>
 
       {avaliable.map((item) => (
-        <SoftwarePure key={item.name} software={item} />
+        <SoftwarePure key={item.id} software={item} />
       ))}
     </section>
   );

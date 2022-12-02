@@ -1,21 +1,14 @@
 import { IconButton, LinearProgress } from "@mui/material";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 
-import { InstallSoftware } from "../InstallList";
 import style from "./style.module.scss";
 import { useRecoilValue } from "recoil";
 import { progressState } from "~/stores/progress";
-import { useMemo } from "react";
+import { TInstallSoftware } from "~/stores/software";
 
-const Software: React.FC<{ software: InstallSoftware }> = ({ software }) => {
+const Software: React.FC<{ software: TInstallSoftware }> = ({ software }) => {
   const progressMap = useRecoilValue(progressState);
-
-  const progressKey = `${software.name}${software.version}`;
-
-  const percent = useMemo(() => {
-    const res = progressMap.get(progressKey);
-    return res;
-  }, [progressMap]);
+  const percent = progressMap.get(software.id);
 
   return (
     <section className={style.wrap}>
