@@ -4,7 +4,7 @@
   import { useInstallList } from "@/stores/software";
   import type { Software } from "@/utils";
   import { storeToRefs } from "pinia";
-  import { inject } from "vue";
+  import { computed, inject, onBeforeUnmount } from "vue";
 
   const emitter = inject(emitterKey);
 
@@ -57,6 +57,10 @@
   };
 
   emitter?.on("install", handleInstall);
+
+  onBeforeUnmount(() => {
+    emitter?.off("install");
+  });
 </script>
 
 <template></template>

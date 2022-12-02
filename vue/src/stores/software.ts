@@ -1,5 +1,5 @@
 import { ref, computed } from "vue";
-import { defineStore, storeToRefs } from "pinia";
+import { defineStore } from "pinia";
 import { softwareData, type Software } from "@/utils";
 
 export type InstallStatus =

@@ -34,7 +34,7 @@
   <div v-if="installList.length > 0" class="container">
     <h2 class="title">已安装</h2>
 
-    <template v-for="item in installList" :key="item.version + item.key">
+    <template v-for="item in installList" :key="item.id">
       <SoftwareComponent :software="item" />
     </template>
   </div>

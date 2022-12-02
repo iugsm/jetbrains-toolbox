@@ -10,7 +10,7 @@
     <h2 v-ripple class="title">
       <v-icon icon="mdi-chevron-down" size="15"></v-icon>可用
     </h2>
-    <template v-for="item in store.avaliableList" :key="item.name">
+    <template v-for="item in store.avaliableList" :key="item.id">
       <SoftwarePure :software="item" />
     </template>
   </div>

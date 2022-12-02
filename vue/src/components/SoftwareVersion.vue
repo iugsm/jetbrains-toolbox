@@ -26,8 +26,8 @@
   const emitter = inject(emitterKey);
   const handleInstall = () => {
     if (disabled.value) return;
-
     disabled.value = true;
+
     emitter?.emit("install", props.software as any);
   };
 </script>
@@ -52,6 +52,7 @@
         height="22"
         variant="flat"
         class="install-btn"
+        :disabled="disabled"
       >
         安装
       </v-btn>
