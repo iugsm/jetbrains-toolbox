@@ -4,14 +4,9 @@
   import { useInstallList } from "@/stores/software";
   import type { Software } from "@/utils";
   import { storeToRefs } from "pinia";
-  import { computed, inject, onBeforeUnmount } from "vue";
+  import { inject, onBeforeUnmount } from "vue";
 
   const emitter = inject(emitterKey);
-
-  type InstallE = {
-    name: string;
-    version: string;
-  };
 
   const installListStore = useInstallList();
   const progressStore = useProgress();
@@ -43,12 +38,10 @@
 
         // 修改状态为 installing
         installList.value[index].status = "installing";
-        // installMap.value.set(arg, { status: "installing" });
 
         // 2000ms 后修改为 installed
         setTimeout(() => {
           installList.value[index].status = "installed";
-          // installMap.value.set(arg, { status: "installed" });
         }, 2000);
       }
 

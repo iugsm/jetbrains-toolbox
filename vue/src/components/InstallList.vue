@@ -6,28 +6,6 @@
 
   const installListStore = useInstallList();
   const { installList } = storeToRefs(installListStore);
-
-  // const installList = computed(() => {
-  //   let list: InstallSoftware[] = [];
-
-  //   let allSoftwareMap = new Map<string, Software>();
-  //   sourceData.forEach((item) => allSoftwareMap.set(item.name, item));
-
-  //   for (const [key, value] of installMap.value) {
-  //     const versionCode = allSoftwareMap
-  //       .get(key.name)
-  //       ?.versions.filter((item) => item.code === key.version)[0].name;
-  //     const temp: InstallSoftware = {
-  //       ...allSoftwareMap.get(key.name)!,
-  //       key: key.name + key.version,
-  //       version: key.version,
-  //       versionCode: versionCode || "",
-  //       status: value.status,
-  //     };
-  //     list.push(temp);
-  //   }
-  //   return list;
-  // });
 </script>
 
 <template>
