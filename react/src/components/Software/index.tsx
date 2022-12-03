@@ -1,15 +1,12 @@
-import { IconButton, LinearProgress, Menu, MenuItem } from "@mui/material";
+import { IconButton, Menu, MenuItem } from "@mui/material";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
-import { useRecoilValue } from "recoil";
-import { progressState } from "~/stores/progress";
-import { TInstallSoftware } from "~/stores/software";
+import { InstallSoftware } from "~/stores/software";
 import { Link } from "react-router-dom";
 import { useMenu } from "~/hooks/useMenu";
+import Description from "./Description";
 import style from "./style.module.scss";
 
-const Software: React.FC<{ software: TInstallSoftware }> = ({ software }) => {
-  const progressMap = useRecoilValue(progressState);
-  const percent = progressMap.get(software.id);
+const Software: React.FC<{ software: InstallSoftware }> = ({ software }) => {
   const { setAnchorEl, ...reset } = useMenu();
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -46,27 +43,7 @@ const Software: React.FC<{ software: TInstallSoftware }> = ({ software }) => {
         </div>
 
         {/* 状态和描述 */}
-        <div className={style.status}>
-          {software.status === "installed" && (
-            <p className={style.description}>{software.description}</p>
-          )}
-
-          {percent !== undefined &&
-            (software.status === "downloading" ||
-              software.status === "installing") && (
-              <>
-                <p className={style.status_text}>
-                  {software.status === "downloading" && "下载中..."}
-                  {software.status === "installing" && "正在安装..."}
-                </p>
-                <LinearProgress
-                  className={style.progress}
-                  variant="determinate"
-                  value={percent}
-                />
-              </>
-            )}
-        </div>
+        <Description software={software} />
       </main>
     </section>
   );

@@ -1,7 +1,7 @@
 import React from "react";
 import { useRecoilValue } from "recoil";
 import { installListState } from "~/stores/software";
-import SoftwareComponent from "../Software/Software";
+import SoftwareComponent from "../Software";
 import style from "./style.module.scss";
 
 const InstallList: React.FC = () => {

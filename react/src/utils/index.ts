@@ -1,13 +1,5 @@
 import { sourceData, type SourceData } from "~/assets/data";
-
-function* generateID() {
-  let id = 1;
-  while (true) {
-    yield id++;
-  }
-}
-
-export const generateId = generateID();
+import { generateId } from "./generateID";
 
 export const deepClone = <T extends object>(
   source: T,

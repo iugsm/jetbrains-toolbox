@@ -1,7 +1,7 @@
 import { useRecoilValue } from "recoil";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import { softwareListState } from "~/stores/software";
-import SoftwarePure from "../Software/SoftwarePure";
+import SoftwarePure from "~/components/SoftwarePure";
 import style from "./style.module.scss";
 
 export default function AvailableList() {
