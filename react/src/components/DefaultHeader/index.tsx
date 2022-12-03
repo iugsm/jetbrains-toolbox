@@ -1,9 +1,8 @@
-import style from "./style.module.css";
-
 import { Settings } from "@mui/icons-material";
 import { IconButton } from "@mui/material";
+import style from "./style.module.scss";
 
-export default function HomeHeader() {
+export default function DefaultHeader() {
   return (
     <header className={style.header}>
       <div className={style.brand}>

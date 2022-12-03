@@ -1,24 +1,19 @@
 import { IconButton, LinearProgress, Menu, MenuItem } from "@mui/material";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
-
-import style from "./style.module.scss";
 import { useRecoilValue } from "recoil";
 import { progressState } from "~/stores/progress";
 import { TInstallSoftware } from "~/stores/software";
-import { useState } from "react";
 import { Link } from "react-router-dom";
+import { useMenu } from "~/hooks/useMenu";
+import style from "./style.module.scss";
 
 const Software: React.FC<{ software: TInstallSoftware }> = ({ software }) => {
   const progressMap = useRecoilValue(progressState);
   const percent = progressMap.get(software.id);
+  const { setAnchorEl, ...reset } = useMenu();
 
-  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-  const open = Boolean(anchorEl);
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
-  };
-  const handleClose = () => {
-    setAnchorEl(null);
   };
 
   return (
@@ -33,20 +28,7 @@ const Software: React.FC<{ software: TInstallSoftware }> = ({ software }) => {
             <MoreVertIcon />
           </IconButton>
 
-          <Menu
-            anchorEl={anchorEl}
-            anchorOrigin={{
-              vertical: "bottom",
-              horizontal: "left",
-            }}
-            transformOrigin={{
-              vertical: "top",
-              horizontal: "right",
-            }}
-            open={open}
-            onClose={handleClose}
-            className={style.menu}
-          >
+          <Menu {...reset} className={style.menu}>
             <MenuItem dense className={style.menu_item}>
               <Link to={`/${software.name}`} className={style.menu_link}>
                 关于 {software.name}

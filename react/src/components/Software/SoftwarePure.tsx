@@ -1,36 +1,23 @@
 import { Button, IconButton, Menu, MenuItem } from "@mui/material";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
-
-import style from "./style.module.scss";
-import { publish } from "~/utils/event";
-import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Software } from "~/utils";
+import { useInstall } from "~/hooks/useInstall";
+import { useMenu } from "~/hooks/useMenu";
+import style from "./style.module.scss";
 
 const SoftwarePure: React.FC<{ software: Software }> = ({ software }) => {
-  const [disabled, setDisabled] = useState(false);
-
-  const handleInstall = () => {
-    if (disabled) return;
-    setDisabled(true);
-    publish("onInstall", { ...software });
-  };
-
-  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-  const open = Boolean(anchorEl);
+  const { disabled, onInstall } = useInstall();
+  const { setAnchorEl, ...reset } = useMenu();
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
-  };
-  const handleClose = () => {
-    setAnchorEl(null);
   };
 
   return (
     <section className={style.wrap}>
       <Link to={`/${software.name}`} className={style.link}></Link>
-
-      <img src={software.logo} className={style.logo} alt="" />
+      <img src={software.logo} className={style.logo} alt="logo" />
 
       <main className={style.main}>
         <div className={style.info}>
@@ -38,7 +25,7 @@ const SoftwarePure: React.FC<{ software: Software }> = ({ software }) => {
 
           <Button
             className={style.install}
-            onClick={handleInstall}
+            onClick={() => onInstall(software)}
             disabled={disabled}
           >
             安装
@@ -48,20 +35,7 @@ const SoftwarePure: React.FC<{ software: Software }> = ({ software }) => {
             <MoreVertIcon />
           </IconButton>
 
-          <Menu
-            anchorEl={anchorEl}
-            anchorOrigin={{
-              vertical: "bottom",
-              horizontal: "left",
-            }}
-            transformOrigin={{
-              vertical: "top",
-              horizontal: "right",
-            }}
-            open={open}
-            onClose={handleClose}
-            className={style.menu}
-          >
+          <Menu {...reset} className={style.menu}>
             <MenuItem dense className={style.menu_item}>
               <Link to={`/${software.name}`} className={style.menu_link}>
                 关于 {software.name}

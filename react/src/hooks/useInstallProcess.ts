@@ -1,11 +1,11 @@
 import { useEffect } from "react";
 import { useRecoilState, useSetRecoilState } from "recoil";
-import { subscribe, unsubscribe } from "~/utils/event";
 import { progressState } from "~/stores/progress";
-import { Software } from "~/utils";
 import { installListState } from "~/stores/software";
+import { Software } from "~/utils";
+import { emitter } from "~/utils/emitter";
 
-const Core = () => {
+export const useInstallProcess = () => {
   const setInstallList = useSetRecoilState(installListState);
   const [progressMap, setProgressMap] = useRecoilState(progressState);
 
@@ -59,14 +59,10 @@ const Core = () => {
   };
 
   useEffect(() => {
-    subscribe("onInstall", handleInstall);
+    emitter.addEventListener("install", handleInstall);
 
     return () => {
-      unsubscribe("onInstall", handleInstall);
+      emitter.removeEventListener("install", handleInstall);
     };
   }, []);
-
-  return <></>;
 };
-
-export default Core;

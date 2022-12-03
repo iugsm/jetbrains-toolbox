@@ -1,11 +1,11 @@
 import { useRecoilValue } from "recoil";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
-import { avaliableListState } from "~/stores/software";
-import style from "./style.module.scss";
+import { softwareListState } from "~/stores/software";
 import SoftwarePure from "../Software/SoftwarePure";
+import style from "./style.module.scss";
 
 export default function AvailableList() {
-  const avaliable = useRecoilValue(avaliableListState);
+  const { avaliableList } = useRecoilValue(softwareListState);
 
   return (
     <section>
@@ -14,7 +14,7 @@ export default function AvailableList() {
         可用
       </header>
 
-      {avaliable.map((item) => (
+      {avaliableList.map((item) => (
         <SoftwarePure key={item.id} software={item} />
       ))}
     </section>

@@ -1,15 +1,15 @@
+import { Suspense } from "react";
 import { RouterProvider } from "react-router-dom";
-import CssBaseline from "@mui/material/CssBaseline";
-import Core from "./components/Core";
+import Scheduler from "./components/Scheduler";
 import router from "./router";
 
 export default function App() {
   return (
     <div style={{ maxWidth: "65ch", margin: "0 auto" }}>
-      <CssBaseline />
-      <RouterProvider router={router} />
-
-      <Core />
+      <Suspense>
+        <RouterProvider router={router} />
+      </Suspense>
+      <Scheduler />
     </div>
   );
 }

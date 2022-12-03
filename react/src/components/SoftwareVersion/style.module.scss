@@ -23,12 +23,13 @@
 }
 
 .date {
+  padding-block-start: 4px;
   font-size: 12px;
   color: var(--text-gray);
 }
 
 .status {
-  width: 70px;
+  width: 80px;
   display: flex;
   justify-content: end;
 }
@@ -50,5 +51,17 @@
 
   &:active {
     background: #cbcbcc;
+  }
+}
+
+// CircularProgress
+.downloading {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.circular_progress {
+  svg {
+    color: var(--blue);
   }
 }

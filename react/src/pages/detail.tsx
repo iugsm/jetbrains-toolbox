@@ -1,11 +1,10 @@
 import { Tab, Tabs } from "@mui/material";
-import { useMemo, useState } from "react";
+import { useState } from "react";
 import { useParams, useSearchParams } from "react-router-dom";
 import DetailHeader from "~/components/DetailHeader";
-
-import style from "~/assets/styles/detail.module.scss";
 import { softwareData } from "~/utils";
 import SoftwareVersion from "~/components/SoftwareVersion";
+import style from "~/assets/styles/detail.module.scss";
 
 export default function Detail() {
   const { name } = useParams();
@@ -14,13 +13,11 @@ export default function Detail() {
 
   const [tab, setTab] = useState(initTabValue);
 
+  const versionList = softwareData.filter((element) => element.name === name);
+
   const handleChange = (event: React.SyntheticEvent, newValue: string) => {
     setTab(newValue);
   };
-
-  const versionList = useMemo(() => {
-    return softwareData.filter((element) => element.name === name);
-  }, [name]);
 
   return (
     <>

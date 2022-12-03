@@ -35,7 +35,8 @@ export type Software = Omit<SourceData, "versions"> & {
 };
 
 export const flatData = () => {
-  const cloneData = deepClone<SourceData[]>(sourceData);
+  // const cloneData = deepClone<SourceData[]>(sourceData);
+  const cloneData = sourceData;
 
   const array: Software[] = [];
   const genSoftwateId = () => generateId.next().value;

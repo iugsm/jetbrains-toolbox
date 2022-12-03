@@ -1,16 +1,23 @@
-import AvailableList from "~/components/AvailableList";
-import HomeHeader from "~/components/HomeHeader";
+import DefaultHeader from "~/components/DefaultHeader";
 import InstallList from "~/components/InstallList";
+import AvailableList from "~/components/AvailableList";
 
 export default function Home() {
   return (
     <>
-      <HomeHeader />
+      <DefaultHeader />
+      <InstallList />
+      <AvailableList />
 
-      <div>
-        <InstallList />
-        <AvailableList />
-      </div>
+      <p
+        style={{
+          fontSize: 12,
+          textAlign: "center",
+          color: "#aaa",
+        }}
+      >
+        素材版权归 JetBrains 所有，本项目仅供学习使用
+      </p>
     </>
   );
 }
