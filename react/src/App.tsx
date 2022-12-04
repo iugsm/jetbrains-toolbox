@@ -1,13 +1,11 @@
-import { Suspense } from "react";
 import { RouterProvider } from "react-router-dom";
+import DefaultLayout from "./Layout/default";
 import router from "./router";
 
 export default function App() {
   return (
-    <div style={{ maxWidth: "65ch", margin: "0 auto" }}>
-      <Suspense>
-        <RouterProvider router={router} />
-      </Suspense>
-    </div>
+    <DefaultLayout>
+      <RouterProvider router={router} />
+    </DefaultLayout>
   );
 }
