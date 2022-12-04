@@ -5,7 +5,7 @@ import SoftwarePure from "~/components/SoftwarePure";
 import style from "./style.module.scss";
 
 export default function AvailableList() {
-  const { avaliableList } = useRecoilValue(softwareListState);
+  const avaliableList = useRecoilValue(softwareListState);
 
   return (
     <section>
