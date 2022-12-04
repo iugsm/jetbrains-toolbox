@@ -3,12 +3,10 @@ import { Software, softwareData } from "~/utils";
 
 export type Status = "downloading" | "installing" | "installed";
 
-export type InstallSoftware = Software & { status: Status };
-
-export type InstallMap = Map<number, InstallSoftware>;
+export type InstallMap = Map<number, Software>;
 
 // 安装列表
-export const installListState = atom<InstallSoftware[]>({
+export const installListState = atom<Software[]>({
   key: "installListState",
   default: [],
 });
@@ -24,7 +22,7 @@ export const softwareListState = selector<{
     const installList = get(installListState);
 
     // 已安装的 id - software map 映射
-    const installMap = new Map<number, InstallSoftware>();
+    const installMap = new Map<number, Software>();
 
     // 遍历，存储对应关系
     const installSoftwareNameSet = new Set();
@@ -49,4 +47,16 @@ export const softwareListState = selector<{
       installMap,
     };
   },
+});
+
+// 安装状态
+export const installStatusState = atom<Map<number, Status>>({
+  key: "statusState",
+  default: new Map(),
+});
+
+// 百分比
+export const downloadPercentState = atom<Map<number, number>>({
+  key: "percentState",
+  default: new Map(),
 });

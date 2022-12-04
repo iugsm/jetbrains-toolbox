@@ -1,25 +1,26 @@
 import React from "react";
 import { LinearProgress } from "@mui/material";
 import { usePercent } from "~/hooks/usePercent";
-import { InstallSoftware } from "~/stores/software";
 import style from "./style.module.scss";
+import { Software } from "~/utils";
+import { useInstallState } from "~/hooks/useInstallState";
 
-const Description: React.FC<{ software: InstallSoftware }> = ({ software }) => {
+const Description: React.FC<{ software: Software }> = ({ software }) => {
+  const status = useInstallState(software);
   const percent = usePercent(software);
 
   return (
     <div className={style.status}>
-      {software.status === "installed" && (
+      {status === "installed" && (
         <p className={style.description}>{software.description}</p>
       )}
 
       {percent !== undefined &&
-        (software.status === "downloading" ||
-          software.status === "installing") && (
+        (status === "downloading" || status === "installing") && (
           <>
             <p className={style.status_text}>
-              {software.status === "downloading" && "下载中..."}
-              {software.status === "installing" && "正在安装..."}
+              {status === "downloading" && "下载中..."}
+              {status === "installing" && "正在安装..."}
             </p>
             <LinearProgress
               className={style.progress}

@@ -1,12 +1,12 @@
 import { IconButton, Menu, MenuItem } from "@mui/material";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
-import { InstallSoftware } from "~/stores/software";
 import { Link } from "react-router-dom";
 import { useMenu } from "~/hooks/useMenu";
 import Description from "./Description";
+import { Software as SoftwareType } from "~/utils";
 import style from "./style.module.scss";
 
-const Software: React.FC<{ software: InstallSoftware }> = ({ software }) => {
+const Software: React.FC<{ software: SoftwareType }> = ({ software }) => {
   const { setAnchorEl, ...reset } = useMenu();
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {

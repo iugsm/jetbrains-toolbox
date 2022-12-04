@@ -1,8 +1,8 @@
 import { useRecoilValue } from "recoil";
-import { progressState } from "~/stores/progress";
-import { InstallSoftware } from "~/stores/software";
+import { downloadPercentState } from "~/stores/software";
+import { Software } from "~/utils";
 
-export const usePercent = (software: InstallSoftware) => {
-  const progressMap = useRecoilValue(progressState);
+export const usePercent = (software: Software) => {
+  const progressMap = useRecoilValue(downloadPercentState);
   return progressMap.get(software.id);
 };

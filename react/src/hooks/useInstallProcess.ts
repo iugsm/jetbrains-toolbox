@@ -1,17 +1,25 @@
 import { useEffect } from "react";
 import { useRecoilState, useSetRecoilState } from "recoil";
-import { progressState } from "~/stores/progress";
-import { installListState } from "~/stores/software";
+import {
+  installListState,
+  downloadPercentState,
+  installStatusState,
+} from "~/stores/software";
 import { Software } from "~/utils";
 import { emitter } from "~/utils/emitter";
 
 export const useInstallProcess = () => {
+  // 安装列表
   const setInstallList = useSetRecoilState(installListState);
-  const [progressMap, setProgressMap] = useRecoilState(progressState);
+  // 设置安装状态
+  const setStatusMap = useSetRecoilState(installStatusState);
+  // 进度条
+  const [progressMap, setProgressMap] = useRecoilState(downloadPercentState);
 
   const handleInstall = (evt: CustomEvent) => {
     const software = evt.detail as Software;
-    setInstallList((prev) => [...prev, { ...software, status: "downloading" }]);
+    setInstallList((prev) => [...prev, { ...software }]);
+    setStatusMap((prev) => new Map(prev.set(software.id, "downloading")));
 
     // 获取百分比
     let percent = progressMap.get(software.id);
@@ -31,25 +39,11 @@ export const useInstallProcess = () => {
         clearInterval(intervalID);
 
         // 修改状态为 installing
-        setInstallList((prev) => {
-          const res = prev.map((element) => {
-            const temp = { ...element };
-            if (temp.id === software.id) temp.status = "installing";
-            return temp;
-          });
-          return res;
-        });
+        setStatusMap((prev) => new Map(prev.set(software.id, "installing")));
 
         // 2000ms 后修改为 installed
         setTimeout(() => {
-          setInstallList((prev) => {
-            const res = prev.map((element) => {
-              const temp = { ...element };
-              if (temp.id === software.id) temp.status = "installed";
-              return temp;
-            });
-            return res;
-          });
+          setStatusMap((prev) => new Map(prev.set(software.id, "installed")));
         }, 2000);
       }
 
