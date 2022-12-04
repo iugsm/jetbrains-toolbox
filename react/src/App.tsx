@@ -1,6 +1,5 @@
 import { Suspense } from "react";
 import { RouterProvider } from "react-router-dom";
-import Scheduler from "./components/Scheduler";
 import router from "./router";
 
 export default function App() {
@@ -9,7 +8,6 @@ export default function App() {
       <Suspense>
         <RouterProvider router={router} />
       </Suspense>
-      <Scheduler />
     </div>
   );
 }

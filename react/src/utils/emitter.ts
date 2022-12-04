@@ -1,9 +1,4 @@
-interface IEmitter {
-  addEventListener: (type: string, cb: (evt: CustomEvent) => void) => void;
-  removeEventListener: (type: string, cb: (evt: CustomEvent) => void) => void;
-}
-
-class Emitter implements IEmitter {
+class Emitter {
   #events: { type: string; cb: (evt: CustomEvent) => void }[] = [];
 
   addEventListener(type: string, cb: (evt: CustomEvent) => void) {
