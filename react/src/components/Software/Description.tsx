@@ -12,7 +12,7 @@ const Description: React.FC<{ software: Software }> = ({ software }) => {
   return (
     <div className={style.status}>
       {status === "installed" && (
-        <p className={style.description}>{software.description}</p>
+        <p className={style.description}>{software.versionName}</p>
       )}
 
       {percent !== undefined &&
