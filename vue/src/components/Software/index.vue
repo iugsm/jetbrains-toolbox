@@ -1,25 +1,10 @@
 <script lang="ts" setup>
-  import { useProgress } from "@/stores/progress";
-  import type { TInstallSoftware } from "@/stores/software";
-  import { computed } from "vue";
+  import type { Software } from "@/utils";
+  import StatusPanel from "./StatusPanel.vue";
 
-  const props = defineProps<{
-    software: TInstallSoftware;
+  defineProps<{
+    software: Software;
   }>();
-
-  const progressStore = useProgress();
-
-  const percent = computed(() => {
-    return progressStore.progressMap.get(props.software.id);
-  });
-
-  const showProgress = computed(() => {
-    return (
-      percent !== undefined &&
-      (props.software.status === "downloading" ||
-        props.software.status === "installing")
-    );
-  });
 </script>
 
 <template>
@@ -64,28 +49,7 @@
       </div>
 
       <!-- 状态和描述 -->
-      <div class="status">
-        <p v-if="!showProgress" class="description">
-          {{ software.versionName }}
-        </p>
-
-        <template v-else>
-          <p class="status-text">
-            {{
-              software.status === "downloading"
-                ? "正在下载......"
-                : "安装中......"
-            }}
-          </p>
-          <v-progress-linear
-            :model-value="percent"
-            bg-color="#bfdcfd"
-            color="#0074f9"
-            bg-opacity="1"
-            rounded
-          ></v-progress-linear>
-        </template>
-      </div>
+      <StatusPanel :software="software" />
     </main>
   </section>
 </template>
@@ -139,21 +103,6 @@
         font-size: 12px;
         font-weight: 400;
         border: 1px solid #afcbe0;
-      }
-    }
-
-    .status {
-      padding-block-start: 2px;
-
-      .status-text {
-        font-size: 12px;
-        color: var(--text-gray);
-      }
-
-      .description {
-        all: unset;
-        font-size: 12px;
-        color: var(--text-gray);
       }
     }
   }

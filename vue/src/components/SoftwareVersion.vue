@@ -1,40 +1,23 @@
 <script lang="ts" setup>
-  import { emitterKey } from "@/emitter";
-  import { useInstallList } from "@/stores/software";
+  import { useInstall } from "@/hooks/useInstall";
+  import { useInstallStatus } from "@/hooks/useInstallStatus";
   import type { Software } from "@/utils";
-  import { computed, inject, ref } from "vue";
 
   const props = defineProps<{ software: Software }>();
 
   // 安装状态
-  const installStore = useInstallList();
-
-  const installStatus = computed(() => {
-    const currentSoftware = installStore.installList.filter(
-      (element) => element.id === props.software.id
-    );
-
-    if (currentSoftware.length > 0) {
-      return currentSoftware[0].status;
-    }
-
-    return undefined;
-  });
+  const status = useInstallStatus(props.software.id);
 
   // 安装逻辑
-  const disabled = ref(false);
-  const emitter = inject(emitterKey);
+  const { disabled, installFn } = useInstall();
   const handleInstall = () => {
-    if (disabled.value) return;
-    disabled.value = true;
-
-    emitter?.emit("install", props.software as any);
+    installFn(props.software);
   };
 </script>
 
 <template>
   <section class="wrap">
-    <div :class="['name', installStatus === 'installed' ? 'active' : '']">
+    <div :class="['name', status === 'installed' ? 'active' : '']">
       {{ software.versionName }}
       <p class="code">{{ software.versionCode }}</p>
     </div>
@@ -42,9 +25,9 @@
     <div class="date">{{ software.date }}</div>
 
     <div class="status">
-      <div v-if="installStatus === 'installed'">已安装</div>
-      <div v-else-if="installStatus === 'downloading'">正在下载</div>
-      <div v-else-if="installStatus === 'installing'">安装中...</div>
+      <div v-if="status === 'installed'">已安装</div>
+      <div v-else-if="status === 'downloading'">正在下载</div>
+      <div v-else-if="status === 'installing'">安装中...</div>
       <v-btn
         v-else
         @click="handleInstall"

@@ -1,8 +1,7 @@
 <script lang="ts" setup>
   import { useInstallList } from "@/stores/software";
   import { storeToRefs } from "pinia";
-
-  import SoftwareComponent from "./Software.vue";
+  import SoftwareComponent from "./Software/index.vue";
 
   const installListStore = useInstallList();
   const { installList } = storeToRefs(installListStore);

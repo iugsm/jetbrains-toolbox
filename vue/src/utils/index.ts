@@ -1,30 +1,5 @@
 import { sourceData, type SourceData } from "@/assets/data";
-
-function* generateID() {
-  let id = 1;
-  while (true) {
-    yield id++;
-  }
-}
-
-export const generateId = generateID();
-
-export const deepClone = <T extends object>(
-  source: T,
-  map = new WeakMap()
-): T => {
-  if (typeof source !== "object" || source === undefined) return source;
-  let ret = Array.isArray(source) ? [] : {};
-
-  if (map.get(source)) {
-    return map.get(source);
-  }
-  for (let key in source) {
-    // @ts-ignore
-    ret[key] = deepClone(source[key], map);
-  }
-  return ret as T;
-};
+import { generateId } from "./generateID";
 
 export type Software = Omit<SourceData, "versions"> & {
   id: number;
@@ -35,8 +10,6 @@ export type Software = Omit<SourceData, "versions"> & {
 };
 
 export const flatData = () => {
-  const cloneData = deepClone<SourceData[]>(sourceData);
-
   const array: Software[] = [];
   const genSoftwateId = () => generateId.next().value;
 
@@ -85,8 +58,7 @@ export const flatData = () => {
     });
   };
 
-  flat(cloneData);
-
+  flat(sourceData);
   return array;
 };
 

@@ -1,53 +1,52 @@
-import { ref, computed } from "vue";
+import { computed, reactive, ref } from "vue";
 import { defineStore } from "pinia";
 import { softwareData, type Software } from "@/utils";
 
-export type InstallStatus =
-  | "downloading"
-  | "installing"
-  | "installed"
-  | "uninstalling";
+export type Status = "downloading" | "installing" | "installed";
 
-export type TInstallSoftware = Software & { status: InstallStatus };
-
-export const useCounterStore = defineStore("counter", () => {
-  const count = ref(0);
-  const doubleCount = computed(() => count.value * 2);
-  function increment() {
-    count.value++;
-  }
-
-  return { count, doubleCount, increment };
+// 安装列表
+export const useInstallList = defineStore("installList", () => {
+  const installList = reactive<Software[]>([]);
+  return { installList };
 });
 
-export const useInstallList = defineStore("installListSotre", () => {
-  const installList = ref<TInstallSoftware[]>([]);
-
-  return {
-    installList,
-  };
-});
-
-export const useAvaliableList = defineStore("avaliableListStore", () => {
+// 可用列表
+export const useAvaliableList = defineStore("avaliableList", () => {
   const installListStore = useInstallList();
 
   const avaliableList = computed(() => {
-    const installSet = new Set();
-
-    installListStore.installList.forEach((element) => {
-      installSet.add(element.name);
-    });
+    const installNameSet = new Set();
+    installListStore.installList.forEach((element) =>
+      installNameSet.add(element.name)
+    );
 
     const list: Software[] = [];
     softwareData.forEach((element) => {
-      if (!installSet.has(element.name) && element.children !== undefined) {
+      if (!installNameSet.has(element.name) && element.children !== undefined) {
         list.push(element);
       }
     });
     return list;
   });
+  return { avaliableList };
+});
 
-  return {
-    avaliableList,
+export const useInstallStatusMap = defineStore("installStatusMap", () => {
+  const statusMap = ref<Map<number, Status>>(new Map());
+
+  const updateStatusMap = (id: number, status: Status) => {
+    statusMap.value.set(id, status);
   };
+
+  return { statusMap, updateStatusMap };
+});
+
+export const useDownloadPercentMap = defineStore("downloadPercentMap", () => {
+  const percentMap = ref<Map<number, number>>(new Map());
+
+  const updatePercentMap = (id: number, percent: number) => {
+    percentMap.value.set(id, percent);
+  };
+
+  return { percentMap, updatePercentMap };
 });

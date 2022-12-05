@@ -1,27 +1,51 @@
 <script setup lang="ts">
-  import { provide } from "vue";
   import { RouterView } from "vue-router";
-  import Core from "@/components/Core.vue";
-
-  import mitt from "mitt";
-  import { emitterKey, type Events } from "./emitter";
-
-  const emitter = mitt<Events>();
-
-  provide(emitterKey, emitter);
+  import Scheduler from "./components/Scheduler.vue";
 </script>
 
 <template>
   <div class="layout">
     <RouterView />
-
-    <Core />
   </div>
+
+  <Scheduler />
+
+  <p class="copyright">
+    素材版权归
+    <a
+      href="https://www.jetbrains.com/"
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+      JetBrains
+    </a>
+    所有，本项目仅供学习使用
+  </p>
 </template>
 
 <style lang="scss" scoped>
   .layout {
-    max-width: 65ch;
+    width: min(65ch, 100%);
     margin: 0 auto;
+    min-height: calc(100vh - 36px);
+    min-height: calc(100dvh - 36px);
+  }
+
+  .copyright {
+    height: 36px;
+    line-height: 36px;
+    margin: 0;
+    padding: 0;
+    color: #aaa;
+    font-size: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+
+    a {
+      all: unset;
+      cursor: pointer;
+    }
   }
 </style>
